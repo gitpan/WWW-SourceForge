@@ -1,4 +1,8 @@
-=head1 WWW::SourceForge
+=head1 NAME
+
+WWW::SourceForge - Interfaces to the SourceForge data API
+
+=head1 SYNOPSIS
 
 The WWW::SourceForge family of modules are intended to implement the API
 documented at https://sourceforge.net/p/forge/documentation/API/
