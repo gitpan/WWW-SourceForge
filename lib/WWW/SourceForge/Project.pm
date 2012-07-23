@@ -3,6 +3,8 @@ use strict;
 use WWW::SourceForge::API;
 use WWW::SourceForge::User;
 
+our $VERSION = '0.10';
+
 =head2 new
 
  Usage: 
