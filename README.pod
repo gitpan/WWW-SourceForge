@@ -49,6 +49,16 @@ the API (PHP and Python would be a winner).
 
 https://sourceforge.net/p/sfprojecttools/tickets/
 
+=head1 HISTORY
+
+A WWW::SourceForge module was originally developed by Kang-min Liu
+(gugod@gugod.org), which utilized WWW::Mechanize to retrieve project
+information from SourceForge project pages. With the many changes to the
+SourceForge website, that module gradually fell out of usefulness. With
+the new(ish) SourceForge data API, we have a means of accessing this
+data without having to parse HTML. But many thanks to Kang-min Liu for
+his early effort, and for his cooperation with me.
+
 =head1 COPYRIGHT
 
 This program is free software; you can redistribute
