@@ -1,15 +1,15 @@
-bin/sfnet
-ChangeLog
-lib/WWW/SourceForge.pm
+Changes
+lib/WWW/SourceForge/API.pm
 lib/WWW/SourceForge/Project.pm
 lib/WWW/SourceForge/User.pm
+LICENSE
 Makefile.PL
-MANIFEST
-META.yml			Module meta-data (added by MakeMaker)
+MANIFEST			This list of files
 README
-t/0.use.t
-xt/1.developer.t
-xt/2.fetch.t
-xt/3.developer.t
-xt/4.noprj.t
+README.pod
+t/001_load.t
+t/002_load_user.t
+t/003_load_project.t
+Todo
+META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)

@@ -1,10 +1,10 @@
 {
-   "abstract" : "Retrieve infromation from SourceForge site",
+   "abstract" : "Interface to SourceForge's APIs - http://sourceforge.net/p/forge/documentation/API/",
    "author" : [
-      "Kang-min Liu (gugod@gugod.org)"
+      "Rich Bowen (rbowen@sourceforge.net)"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.112150",
    "license" : [
       "unknown"
    ],
@@ -22,22 +22,21 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "0"
+            "ExtUtils::MakeMaker" : 0
          }
       },
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "0"
+            "ExtUtils::MakeMaker" : 0
          }
       },
       "runtime" : {
          "requires" : {
-            "HTML::TableExtract" : "0",
-            "WWW::Mechanize" : "0",
-            "YAML" : "0"
+            "JSON::Parse" : 0,
+            "Test::Simple" : "0.44"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "0.10"
+   "version" : "0.31"
 }

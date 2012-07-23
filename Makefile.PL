@@ -1,19 +1,15 @@
 
-use ExtUtils::MakeMaker;
 
+use ExtUtils::MakeMaker;
+# See lib/ExtUtils/MakeMaker.pm for details of how to influence
+# the contents of the Makefile that is written.
 WriteMakefile(
-    AUTHOR              => 'Kang-min Liu (gugod@gugod.org)',
-    ABSTRACT            => 'Retrieve infromation from SourceForge site',
-    NAME                => 'WWW::SourceForge',
-    VERSION             => '0.10',
-    DISTNAME            => 'WWW-SourceForge',
-    PREREQ_PM           => {
-        'WWW::Mechanize'     => '0',
-	'HTML::TableExtract' => '0',
-	'YAML' => '0',
-    },
-    dist                => {
-        COMPRESS        => 'gzip -9',
-        SUFFIX          => '.gz',
-    },
+    NAME         => 'WWW::SourceForge',
+    VERSION_FROM => 'lib/WWW/SourceForge/version.pl', # finds \$VERSION
+    AUTHOR       => 'Rich Bowen (rbowen@sourceforge.net)',
+    ABSTRACT     => 'Interface to SourceForge\'s APIs - http://sourceforge.net/p/forge/documentation/API/',
+    PREREQ_PM    => {
+                     'Test::Simple' => 0.44,
+                     'JSON::Parse' => 0,
+                    },
 );
