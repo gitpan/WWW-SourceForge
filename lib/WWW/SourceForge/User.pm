@@ -1,6 +1,6 @@
 package WWW::SourceForge::User;
 use strict;
-use WWW::SourceForge::API;
+use WWW::SourceForge;
 use WWW::SourceForge::Project;
 
 our $VERSION = '0.10';
@@ -21,7 +21,7 @@ sub new {
     my ( $class, %parameters ) = @_;
     my $self = bless( {}, ref($class) || $class );
 
-    my $api = new WWW::SourceForge::API;
+    my $api = new WWW::SourceForge;
     my $json;
     if ( $parameters{id} ) {
         $json = $api->call(

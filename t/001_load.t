@@ -4,9 +4,9 @@
 
 use Test::More tests => 2;
 
-BEGIN { use_ok( 'WWW::SourceForge::API' ); }
+BEGIN { use_ok( 'WWW::SourceForge' ); }
 
-my $object = WWW::SourceForge::API->new ();
-isa_ok ($object, 'WWW::SourceForge::API', 'WWW::SourceForge::API interface loads ok');
+my $object = WWW::SourceForge->new ();
+isa_ok ($object, 'WWW::SourceForge', 'WWW::SourceForge interface loads ok');
 
 
