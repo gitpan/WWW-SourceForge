@@ -169,8 +169,12 @@ sub downloads {
     my $self = shift;
     my %args = @_;
 
-    my $data_api = WWW::SourceForge->new( api => 'download' );
-    my $json = $data_api->call( %args );
+    my $data_api = $self->{data_api} || WWW::SourceForge->new( api => 'download' );
+    $self->{data_api} = $data_api;
+
+    my $json = $data_api->call( %args, project => $self->shortdesc() );
+
+    return $json->{summaries}->{time}->{downloads};
 }
 
 =head2 Data access AUTOLOADER

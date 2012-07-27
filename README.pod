@@ -36,6 +36,13 @@ the API (PHP and Python would be a winner).
     my @admins = $proj->admins(); # WWW::SourceForge::User objects
     my @developers = $proj->developers(); # Ditto
 
+    # WARNING: This method is probably going to change in the future to
+    # return more detailed download data. Check docs frequently.
+    my $download_count = $proj->downloads(
+        start_date => '2012-07-01',
+        end_date   => '2012-07-25'
+    );
+
 =head2 WWW::SourceForge::Release (future?)
 
 =head1 AUTHOR

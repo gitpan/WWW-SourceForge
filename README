@@ -1,4 +1,7 @@
-WWW::SourceForge
+NAME
+    WWW::SourceForge - Interfaces to the SourceForge data API
+
+SYNOPSIS
     The WWW::SourceForge family of modules are intended to implement the API
     documented at https://sourceforge.net/p/forge/documentation/API/
 
@@ -29,6 +32,13 @@ USAGE
         my @admins = $proj->admins(); # WWW::SourceForge::User objects
         my @developers = $proj->developers(); # Ditto
 
+        # WARNING: This method is probably going to change in the future to
+        # return more detailed download data. Check docs frequently.
+        my $download_count = $proj->downloads(
+            start_date => '2012-07-01',
+            end_date   => '2012-07-25'
+        );
+
   WWW::SourceForge::Release (future?)
 AUTHOR
         Rich Bowen
@@ -38,6 +48,15 @@ AUTHOR
 
 SUPPORT
     https://sourceforge.net/p/sfprojecttools/tickets/
+
+HISTORY
+    A WWW::SourceForge module was originally developed by Kang-min Liu
+    (gugod@gugod.org), which utilized WWW::Mechanize to retrieve project
+    information from SourceForge project pages. With the many changes to the
+    SourceForge website, that module gradually fell out of usefulness. With
+    the new(ish) SourceForge data API, we have a means of accessing this
+    data without having to parse HTML. But many thanks to Kang-min Liu for
+    his early effort, and for his cooperation with me.
 
 COPYRIGHT
     This program is free software; you can redistribute it and/or modify it
