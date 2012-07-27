@@ -15,6 +15,6 @@ my @projects = $user->projects();
 is( scalar( @projects ), 19, '19 projects' );
 
 my $p = $projects[0];
-is( $p->name(), 'SFProjectTools' );
+is( $p->name(), 'SourceForge Project Tools' );
 
 

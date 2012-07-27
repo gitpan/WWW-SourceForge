@@ -18,6 +18,10 @@ no_index:
     - t
     - inc
 requires:
+  Data::Dumper: 0
   JSON::Parse: 0
+  LWP::Simple: 0
+  Test::More: 0
   Test::Simple: 0.44
-version: 0.36
+  XML::Feed: 0
+version: 0.38

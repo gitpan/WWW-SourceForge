@@ -32,11 +32,15 @@
       },
       "runtime" : {
          "requires" : {
+            "Data::Dumper" : 0,
             "JSON::Parse" : 0,
-            "Test::Simple" : "0.44"
+            "LWP::Simple" : 0,
+            "Test::More" : 0,
+            "Test::Simple" : "0.44",
+            "XML::Feed" : 0
          }
       }
    },
    "release_status" : "stable",
-   "version" : "0.36"
+   "version" : "0.38"
 }

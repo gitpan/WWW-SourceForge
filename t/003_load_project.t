@@ -38,3 +38,6 @@ for (1..10) {
     is( scalar( $proj3->users() ), 12 ); 
 }
 
+# TODO
+# my @files = $proj3->files();
+

@@ -2,6 +2,7 @@ package WWW::SourceForge::Project;
 use strict;
 use WWW::SourceForge;
 use WWW::SourceForge::User;
+use Data::Dumper;
 
 our $VERSION = '0.10';
 
@@ -25,6 +26,8 @@ sub new {
     my $self = bless( {}, ref($class) || $class );
 
     my $api = new WWW::SourceForge;
+    $self->{api} = $api;
+
     my $json;
     if ( $parameters{id} ) {
         $json = $api->call(
@@ -106,6 +109,68 @@ sub users {
 
     my @users = ( $self->admins(), $self->developers() );
     return @users;
+}
+
+=head2 files
+
+List of recent released files
+
+=cut
+
+sub files {
+    my $self = shift;
+
+    return @{ $self->{data}->{releases} } if $self->{data}->{releases};
+    my %args = @_;
+    
+    my $api = new WWW::SourceForge;
+# http://sourceforge.net/api/release/index/project-id/156708/mtime/desc/rss
+
+    my @files = $self->{api}->call(
+        method             => 'release',
+        "index/project-id" => $self->id(),
+        mtime              => 'desc',
+        format             => 'rss',
+    );
+
+    $self->{data}->{releases} = \@files;
+}
+
+=head2 latest_release 
+
+Date of the latest released file
+
+=cut
+
+sub latest_release {
+    my $self = shift;
+    my @files = $self->files();
+    return $files[0]->pubDate();
+}
+
+=head2 downloads
+
+Download counts for the specified date range. If no date range is
+supplied, assume the 7 days leading up to today.
+
+WARNING: This API is subject to change any moment. The downloads API
+gives us a LOT more information than just a count, and it may be that we
+want to expose all of it later one. Right now I just want a count.
+
+    my $dl_count = $project->downloads( 
+        start_date => '2012-07-01',
+        end_date -> '2012-07-25' 
+    );
+
+=cut
+
+# https://sourceforge.net/projects/xbmc/files/stats/json?start_date=2010-05-01&end_date=2010-05-11
+sub downloads {
+    my $self = shift;
+    my %args = @_;
+
+    my $data_api = WWW::SourceForge->new( api => 'download' );
+    my $json = $data_api->call( %args );
 }
 
 =head2 Data access AUTOLOADER
