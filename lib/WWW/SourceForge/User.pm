@@ -3,7 +3,7 @@ use strict;
 use WWW::SourceForge;
 use WWW::SourceForge::Project;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 =head2 new
 
@@ -42,6 +42,8 @@ sub new {
     return $self;
 
 }
+
+sub email { return shift->sf_email(); }
 
 =head2 projects
 

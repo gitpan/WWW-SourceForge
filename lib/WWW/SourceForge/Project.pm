@@ -4,7 +4,7 @@ use WWW::SourceForge;
 use WWW::SourceForge::User;
 use Data::Dumper;
 
-our $VERSION = '0.10';
+our $VERSION = '0.12';
 
 =head2 new
 
