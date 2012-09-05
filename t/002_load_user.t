@@ -12,9 +12,9 @@ is( $user->id(), '40648' );
 is( $user->sf_email(), 'rbowen@users.sf.net' );
 
 my @projects = $user->projects();
-is( scalar( @projects ), 19, '19 projects' );
+is( scalar( @projects ), 20, '20 projects' );
 
 my $p = $projects[0];
-is( $p->name(), 'SourceForge Project Tools' );
+is( $p->name(), 'BO2K' );
 
 

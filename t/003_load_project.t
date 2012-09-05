@@ -25,6 +25,9 @@ is( $object2->name(), 'Flight ICS' );
 $t += 2;
 
 my $proj3 = WWW::SourceForge::Project->new( name => 'reefknot' );
+is( $proj3->id(), 14603 );
+$t++;
+
 my @admins = $proj3->admins();
 
 my $admin1 = $admins[0];
@@ -46,8 +49,9 @@ for (1..10) {
     $t++;
 }
 
-# TODO
-# my @files = $proj3->files();
+my @files = $proj3->files();
+is( $proj3->latest_release(), 'Fri, 28 Dec 2001 02:25:45 +0000' );
+$t++;
 
 done_testing( $t );
 

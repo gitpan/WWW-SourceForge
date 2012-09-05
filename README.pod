@@ -52,6 +52,11 @@ the API (PHP and Python would be a winner).
     SourceForge Community Geek Hacker
     rbowen@apache.org
 
+=head1 SOURCE
+
+The source is in Git on SourceForge: https://sourceforge.net/p/sfprojecttools/code/
+Patches make me happy.
+
 =head1 SUPPORT
 
 https://sourceforge.net/p/sfprojecttools/tickets/

@@ -4,7 +4,7 @@ use WWW::SourceForge;
 use WWW::SourceForge::User;
 use Data::Dumper;
 
-our $VERSION = '0.12';
+our $VERSION = '0.20';
 
 =head2 new
 
@@ -120,32 +120,35 @@ List of recent released files
 sub files {
     my $self = shift;
 
-    return @{ $self->{data}->{releases} } if $self->{data}->{releases};
+    return @{ $self->{data}->{files} } if $self->{data}->{files};
     my %args = @_;
     
     my $api = new WWW::SourceForge;
-# http://sourceforge.net/api/release/index/project-id/156708/mtime/desc/rss
+# http://sourceforge.net/api/file/index/project-id/14603/crtime/desc/rss
 
-    my @files = $self->{api}->call(
-        method             => 'release',
-        "index/project-id" => $self->id(),
-        mtime              => 'desc',
-        format             => 'rss',
+    # Passing a full uri feels evil, but it's necessary because the file
+    # api cares about argument order.
+    my $files = $self->{api}->call(
+        uri    => '/file/index/project-id/' . $self->id() . '/crtime/desc/rss',
+        format => 'rss',
     );
 
-    $self->{data}->{releases} = \@files;
+    $self->{data}->{files} = $files->{entries};
+    return @{ $files->{entries} };
 }
 
 =head2 latest_release 
 
-Date of the latest released file
+Date of the latest released file. It's a string. The format is pretty
+much guaranteed to change in the future. For example, it'll probably be
+a DateTime object.
 
 =cut
 
 sub latest_release {
     my $self = shift;
     my @files = $self->files();
-    return $files[0]->pubDate();
+    return $files[0]->{entry}->{pubDate};
 }
 
 =head2 downloads
@@ -216,6 +219,9 @@ Implements a Perl interface to SourceForge projects. See http://sourceforge.net/
   print $project->id();
   print $project->type();
   print $project->status();
+  print $project->latest_release();
+
+See the 'project_details.pl' script in scripts/perl/ for more details.
 
 =head1 BUGS
 

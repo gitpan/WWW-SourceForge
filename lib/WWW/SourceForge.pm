@@ -4,7 +4,7 @@ use LWP::Simple;
 use JSON::Parse;
 use XML::Feed;
 
-our $VERSION = '0.42'; # This is the overall version for the entire
+our $VERSION = '0.50'; # This is the overall version for the entire
 # package, so should probably be updated even when the other modules are
 # touched.
 
@@ -63,6 +63,7 @@ as args to that call.
 
 sub call {
     my $self = shift;
+    my @rawargs = @_;
     my %args = @_;
 
     my $r = {};
@@ -91,19 +92,28 @@ sub call {
     # https://sourceforge.net/p/forge/documentation/API/
     } else {
 
-        my $method = $args{method} || return $r;
-        delete( $args{method} );
+        # HACK
+        # If a full URI is provided, use that
+        if ( $args{uri} ) {
+            $format = $args{format} || 'json';
+            $url = $self->{api_url} . $args{uri};
+        } else {
 
-        $format = $args{format} || 'json';
-        delete( $args{format} );
+            my $method = $args{method} || return $r;
+            delete( $args{method} );
 
-        $url = $self->{api_url} . '/' . $method;
-        foreach my $a ( keys %args ) {
-            $url .= '/' . $a . '/' . $args{$a};
+            $format = $args{format} || 'json';
+            delete( $args{format} );
+
+            $url = $self->{api_url} . '/' . $method;
+            # $url .= '/' . join('/',@args);
+            foreach my $a ( keys %args ) {
+                $url .= '/' . $a . '/' . $args{$a};
+            }
+
+            # Format defaults to 'json'
+            $url .= '/' . $format;
         }
-
-        # Format defaults to 'json'
-        $url .= '/' . $format;
     }
 
     if ( $format eq 'rss' ) {
