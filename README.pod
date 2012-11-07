@@ -43,6 +43,12 @@ the API (PHP and Python would be a winner).
         end_date   => '2012-07-25'
     );
 
+    # WARNING: This method is probably going to change in the future so
+    # that we can return actual File or Release objects. Still to be
+    # decided. Check docs frequently.
+    my @files = $proj->files();
+    my $date_string = $proj->latest_release();
+
 =head2 WWW::SourceForge::Release (future?)
 
 =head1 AUTHOR

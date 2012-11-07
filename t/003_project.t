@@ -15,8 +15,9 @@ $t += 2;
 
 is( $object->type(), 10,           'Allura project' );
 is( $object->name(), 'Flight ICS', 'Project name' );
+is( $object->summary(), 'Create ICS files from flight itinerary information', 'Project summary' );
 is( $object->id(),   '631079',     'Project id' );
-$t += 3;
+$t += 4;
 
 
 my $object2 = WWW::SourceForge::Project->new( id => '631079' );
@@ -49,8 +50,26 @@ for (1..10) {
     $t++;
 }
 
+# Note that this will almost certainly be moved into a ::Files module at
+# some point. Or Releases. Or something like that.
 my @files = $proj3->files();
 is( $proj3->latest_release(), 'Fri, 28 Dec 2001 02:25:45 +0000' );
+$t++;
+
+# Project logos
+my $p = WWW::SourceForge::Project->new( name => 'flightics' );
+is ( $p->logo(), 'http://sourceforge.net/p/flightics/icon' );
+
+my $p2 = WWW::SourceForge::Project->new( name => 'rbclassic' );
+is ( $p2->logo(), 'http://a.fsdn.com/con/img/project_default.png' );
+
+my $p3 = WWW::SourceForge::Project->new( name => 'wings' );
+is ( $p3->logo(), 'http://sourceforge.net/p/wings/icon' ); # They upgraded
+$t+=3;
+
+# Project logo for an allura project without an icon
+my $p4 = WWW::SourceForge::Project->new( name => 'sfprojecttools' );
+is ( $p4->logo(), 'http://a.fsdn.com/con/img/project_default.png' );
 $t++;
 
 done_testing( $t );

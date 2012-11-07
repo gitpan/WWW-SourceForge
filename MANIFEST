@@ -9,8 +9,9 @@ MANIFEST			This list of files
 README
 README.pod
 t/001_load.t
-t/002_load_user.t
-t/003_load_project.t
+t/002_user.t
+t/003_project.t
+t/004_downloads.t
 Todo
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)

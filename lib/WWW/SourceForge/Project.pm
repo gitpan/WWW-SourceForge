@@ -3,8 +3,10 @@ use strict;
 use WWW::SourceForge;
 use WWW::SourceForge::User;
 use Data::Dumper;
+use LWP::Simple;
 
-our $VERSION = '0.20';
+our $VERSION = '0.32';
+our $DEFAULT_ICON = 'http://a.fsdn.com/con/img/project_default.png';
 
 =head2 new
 
@@ -124,7 +126,7 @@ sub files {
     my %args = @_;
     
     my $api = new WWW::SourceForge;
-# http://sourceforge.net/api/file/index/project-id/14603/crtime/desc/rss
+    # http://sourceforge.net/api/file/index/project-id/14603/crtime/desc/rss
 
     # Passing a full uri feels evil, but it's necessary because the file
     # api cares about argument order.
@@ -133,8 +135,12 @@ sub files {
         format => 'rss',
     );
 
-    $self->{data}->{files} = $files->{entries};
-    return @{ $files->{entries} };
+    my @files;
+    foreach my $f ( @{ $files->{entries} } ) {
+        push @files, $f->{entry};
+    }
+    $self->{data}->{files} = \@files;
+    return @files;
 }
 
 =head2 latest_release 
@@ -148,7 +154,9 @@ a DateTime object.
 sub latest_release {
     my $self = shift;
     my @files = $self->files();
-    return $files[0]->{entry}->{pubDate};
+    return $files[0]->{pubDate}; # TODO This is an object, and
+                                 # presumably I should be calling
+                                 # object methods.
 }
 
 =head2 downloads
@@ -178,6 +186,94 @@ sub downloads {
     my $json = $data_api->call( %args, project => $self->shortdesc() );
 
     return $json->{summaries}->{time}->{downloads};
+}
+
+=head2 logo
+
+For Allura projects, the logo is at https://sourceforge.net/p/PROJECT/icon
+For Classic projects, who the heck knows?
+
+WARNING WARNING WARNING
+This method will break the next time SF redesigns the project summary
+page. On the other hand, by then all projects will be Allura projects,
+and the else clause will never execute.
+WARNING WARNING WARNING
+
+=cut
+
+sub logo {
+    my $self = shift;
+    my %args = @_;
+
+    if ( $self->type == 10 ) {
+        my $icon = 'http://sourceforge.net/p/' . $self->shortdesc() . '/icon';
+
+        # Need to verify that it's actually there
+        my $verify = get( $icon );
+        return $verify
+            ? $icon
+            : $DEFAULT_ICON;
+    } else {
+
+        # Screen scrape to get the icon
+        # my $psp_content = get( $self->psp() );
+        my $psp_content = $self->_psp_content();
+
+        my $m = $1 if $psp_content =~ m/img itemscope.*? Icon" src="(.*?)"/s;
+        my $icon =
+          $m
+          ? 'http:' . $m
+          : $DEFAULT_ICON;
+        return $icon;
+    }
+}
+
+# Fetch and cache PSP contents
+sub _psp_content {
+    my $self = shift;
+    unless ( $self->{psp_content} ) {
+        $self->{psp_content} = get( $self->psp() ) || '';
+    }
+    return $self->{psp_content};
+}
+
+# Alias
+sub icon {
+    my $self = shift;
+    return $self->logo( @_ );
+}
+
+=head2 summary
+
+Returns summary statement of project, if any.
+
+WARNING WARNING WARNING
+This method relies on particular HTML IDs, and so will break the next
+time the site is redesigned. Hopefully by then this will be directly
+available in the API.
+WARNING WARNING WARNING
+
+=cut
+
+sub summary {
+    my $self = shift;
+    my $psp_content = $self->_psp_content();
+
+    my $summary = $1 if $psp_content =~ m!id="summary">(.*?)</p>!s;
+    $summary =~ s/^\s+//; $summary =~ s/\s+$//;
+    return $summary;
+}
+
+# Project Summary Page URL
+sub psp {
+    my $self = shift;
+    return 'https://sourceforge.net/projects/'.$self->shortdesc();
+}
+
+# Alias
+sub unix_name {
+    my $self = shift;
+    return $self->shortdesc();
 }
 
 =head2 Data access AUTOLOADER
