@@ -15,6 +15,6 @@ my @projects = $user->projects();
 is( scalar( @projects ), 24, '24 projects' );
 
 my $p = $projects[0];
-is( $p->name(), 'Scrum-it' );
+is( $p->name(), 'Allura' );
 
 
