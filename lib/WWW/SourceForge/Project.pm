@@ -5,7 +5,7 @@ use WWW::SourceForge::User;
 use Data::Dumper;
 use LWP::Simple;
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 our $DEFAULT_ICON = 'http://a.fsdn.com/con/img/project_default.png';
 
 =head2 new
@@ -278,13 +278,19 @@ sub unix_name {
 
 sub activity {
     my $self = shift;
+    return @{ $self->{data}->{activity} } if $self->{data}->{activity};
+
     my $rss  = $self->{api}->call(
         method  => 'proj_activity',
         project => $self,
     );
-    print Dumper( $rss );
-
-    return @{ $rss->{entries} };
+    
+    my @activity;
+    foreach my $e ( @{ $rss->{entries} } ) {
+        push @activity, $e->{entry};
+    }
+    $self->{data}->{activity} = \@activity;
+    return @activity;
 }
 
 =head2 Data access AUTOLOADER
