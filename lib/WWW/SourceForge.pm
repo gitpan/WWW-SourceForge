@@ -4,7 +4,7 @@ use LWP::Simple;
 use JSON::Parse;
 use XML::Feed;
 
-our $VERSION = '0.56'; # This is the overall version for the entire
+our $VERSION = '0.57'; # This is the overall version for the entire
 # package, so should probably be updated even when the other modules are
 # touched.
 
@@ -63,17 +63,23 @@ as args to that call.
 
 sub call {
     my $self = shift;
-    my @rawargs = @_;
     my %args = @_;
 
     my $r = {};
     my $url;
     my $format;
 
+    if ( defined( $args{method} ) && ( $args{ method } eq 'proj_activity' ) ) {
+        my $project = $args{ project };
+        $url =
+            'http://sourceforge.net/export/rss2_keepsake.php?group_id=' .
+            $project->id();
+        $format = 'rss'; 
+    }
+
     # Download API, documented at
     # https://sourceforge.net/p/forge/documentation/Download%20Stats%20API/
-    if ( $self->{api} eq 'download' ) {
-
+    elsif ( $self->{api} eq 'download' ) {
 
         # TODO: Default start date, end date (last 7 days, perhaps?)
 

@@ -5,7 +5,7 @@ use WWW::SourceForge::User;
 use Data::Dumper;
 use LWP::Simple;
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 our $DEFAULT_ICON = 'http://a.fsdn.com/con/img/project_default.png';
 
 =head2 new
@@ -274,6 +274,17 @@ sub psp {
 sub unix_name {
     my $self = shift;
     return $self->shortdesc();
+}
+
+sub activity {
+    my $self = shift;
+    my $rss  = $self->{api}->call(
+        method  => 'proj_activity',
+        project => $self,
+    );
+    print Dumper( $rss );
+
+    return @{ $rss->{entries} };
 }
 
 =head2 Data access AUTOLOADER
