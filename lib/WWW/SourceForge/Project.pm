@@ -2,10 +2,9 @@ package WWW::SourceForge::Project;
 use strict;
 use WWW::SourceForge;
 use WWW::SourceForge::User;
-use Data::Dumper;
 use LWP::Simple;
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 our $DEFAULT_ICON = 'http://a.fsdn.com/con/img/project_default.png';
 
 =head2 new
@@ -267,14 +266,28 @@ sub summary {
 # Project Summary Page URL
 sub psp {
     my $self = shift;
-    return 'https://sourceforge.net/projects/'.$self->shortdesc();
+    return 'http://sourceforge.net/projects/'.$self->shortdesc();
 }
 
-# Alias
+# Alias to shortdesc
 sub unix_name {
     my $self = shift;
     return $self->shortdesc();
 }
+
+=head2 activity
+
+Contents of the project activity RSS feed. It's an array, and each item
+looks like 
+
+  {
+    'pubDate' => 'Tue, 12 Jun 2012 19:33:05 +0000',
+    'title'   => 'sf-robot changed the public information on the Flight ICS project',
+    'link'    => 'http://sourceforge.net/projects/flightics',
+    'description' => 'sf-robot changed the public information on the Flight ICS project'
+  }
+
+=cut
 
 sub activity {
     my $self = shift;

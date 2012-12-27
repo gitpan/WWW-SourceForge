@@ -1,10 +1,10 @@
 package WWW::SourceForge;
 use strict;
-use LWP::Simple;
+use LWP::Simple qw(get);
 use JSON::Parse;
 use XML::Feed;
 
-our $VERSION = '0.58'; # This is the overall version for the entire
+our $VERSION = '0.59'; # This is the overall version for the entire
 # package, so should probably be updated even when the other modules are
 # touched.
 
@@ -27,9 +27,9 @@ sub new {
     my $api = $parameters{api} || 'data';
     my $api_url;
     if ( $api eq 'download' ) {
-        $api_url = 'https://sourceforge.net/projects';
+        $api_url = 'http://sourceforge.net/projects';
     } else {
-        $api_url = 'https://sourceforge.net/api';
+        $api_url = 'http://sourceforge.net/api';
     }
 
     my $self = bless(

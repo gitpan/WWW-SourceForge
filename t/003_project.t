@@ -3,7 +3,6 @@
 # t/003_load_project.t - check project module loading
 
 use Test::More;
-use Data::Dumper;
 my $t = 0;
 
 BEGIN { use_ok( 'WWW::SourceForge::Project' ); }
