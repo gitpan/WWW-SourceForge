@@ -3,8 +3,9 @@ use strict;
 use WWW::SourceForge;
 use WWW::SourceForge::User;
 use LWP::Simple;
+use Data::Dumper;
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 our $DEFAULT_ICON = 'http://a.fsdn.com/con/img/project_default.png';
 
 =head2 new
@@ -291,6 +292,8 @@ looks like
 
 sub activity {
     my $self = shift;
+
+    # Cached
     return @{ $self->{data}->{activity} } if $self->{data}->{activity};
 
     my $rss  = $self->{api}->call(

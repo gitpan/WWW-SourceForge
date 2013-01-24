@@ -4,7 +4,7 @@ use LWP::Simple qw(get);
 use JSON::Parse;
 use XML::Feed;
 
-our $VERSION = '0.59'; # This is the overall version for the entire
+our $VERSION = '0.60'; # This is the overall version for the entire
 # package, so should probably be updated even when the other modules are
 # touched.
 
@@ -125,13 +125,29 @@ sub call {
     if ( $format eq 'rss' ) {
         $r = { entries => [] };
 
-        my $feed = XML::Feed->parse( URI->new($url) ) or return $r;
-        for my $entry ( $feed->entries ) {
-            push @{ $r->{entries} }, $entry;
+        my $feed;
+        eval { $feed = XML::Feed->parse( URI->new($url) ) };
+        if ($@) {
+            warn $@;
+            return $r;
+        }
+        {
+            no warnings 'all';
+	    if ( $feed && $feed->entries ) {
+		for my $entry ( $feed->entries ) {
+	    	    push @{ $r->{entries} }, $entry;
+		}
+	    } else {
+		return { entries => [] };
+	    }
         }
     } else {
         my $json = get($url);
-        $r = JSON::Parse::json_to_perl($json);
+	eval { $r = JSON::Parse::json_to_perl($json); };
+	if ( $@ ) {
+	    warn $@;
+	    return { entries => [] };
+	}
     }
     return $r;
 }
