@@ -31,10 +31,10 @@ $t++;
 my @admins = $proj3->admins();
 
 my $admin1 = $admins[0];
-is( $admin1->username(), 'rbowen' );
+is( $admin1->username(), 'srl' );
 
 my $admin2 = $admins[1];
-is( $admin2->username(), 'srl' );
+is( $admin2->username(), 'skud' );
 
 is( scalar( $proj3->admins() ), 3 ); # Should get it from the cache this time
 

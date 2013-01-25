@@ -12,9 +12,9 @@ is( $user->id(), '40648' );
 is( $user->sf_email(), 'rbowen@users.sf.net' );
 
 my @projects = $user->projects();
-is( scalar( @projects ), 24, '24 projects' );
+is( scalar( @projects ), 26, '26 projects' );
 
 my $p = $projects[0];
-is( $p->name(), 'Allura' );
+is( $p->name(), 'modules.a.o' );
 
 
