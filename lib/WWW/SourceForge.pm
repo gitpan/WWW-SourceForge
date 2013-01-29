@@ -4,7 +4,7 @@ use LWP::Simple qw(get);
 use JSON::Parse;
 use XML::Feed;
 
-our $VERSION = '0.61'; # This is the overall version for the entire
+our $VERSION = '0.62'; # This is the overall version for the entire
 # package, so should probably be updated even when the other modules are
 # touched.
 
