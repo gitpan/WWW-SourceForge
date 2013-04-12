@@ -3,8 +3,9 @@ use strict;
 use LWP::Simple qw(get);
 use JSON::Parse;
 use XML::Feed;
+use File::HomeDir;
 
-our $VERSION = '0.62'; # This is the overall version for the entire
+our $VERSION = '0.65'; # This is the overall version for the entire
 # package, so should probably be updated even when the other modules are
 # touched.
 
@@ -26,6 +27,9 @@ sub new {
 
     my $api = $parameters{api} || 'data';
     my $api_url;
+
+# TODO: This stuff made sense when I wrote it, but until there's a
+# single unified API, this is just confusing. Need to nuke this bit
     if ( $api eq 'download' ) {
         $api_url = 'http://sourceforge.net/projects';
     } else {
@@ -133,24 +137,46 @@ sub call {
         }
         {
             no warnings 'all';
-	    if ( $feed && $feed->entries ) {
-		for my $entry ( $feed->entries ) {
-	    	    push @{ $r->{entries} }, $entry;
-		}
-	    } else {
-		return { entries => [] };
-	    }
+            if ( $feed && $feed->entries ) {
+                for my $entry ( $feed->entries ) {
+                    push @{ $r->{entries} }, $entry;
+                }
+            } else {
+                return { entries => [] };
+            }
         }
     } else {
         my $json = get($url);
-	eval { $r = JSON::Parse::json_to_perl($json); };
-	if ( $@ ) {
-	    warn $@;
-	    return { entries => [] };
-	}
+        eval { $r = JSON::Parse::json_to_perl($json); };
+        if ( $@ ) {
+            warn $@;
+            return { entries => [] };
+        }
     }
     return $r;
 }
+
+# Loads a config from ~/.sourceforge
+sub get_config {
+    my $conf = File::HomeDir->my_home() . "/.sourceforge";
+    my %config = ();
+
+    if ( -e $conf ) {
+        open my $C, "<$conf" or die "Couldn't open $conf";
+        my @conf = <$C>;
+        close $C;
+
+        foreach my $line (@conf) {
+            chomp $line;
+            next if $line =~ m/^#/;
+
+            my ( $var, $val ) = split /\s+/, $line;
+            next unless $val;
+            $config{$var} = $val;
+        }
+    }
+    return %config;
+} 
 
 =head1 NAME
 

@@ -20,8 +20,10 @@ no_index:
 requires:
   Data::Dumper: 0
   JSON::Parse: 0
+  LWP::Authen::OAuth: 0
   LWP::Simple: 0
+  LWP::UserAgent: 0
   Test::More: 0
   Test::Simple: 0.44
   XML::Feed: 0
-version: 0.62
+version: 0.65

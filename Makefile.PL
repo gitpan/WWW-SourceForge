@@ -16,5 +16,7 @@ WriteMakefile(
         'XML::Feed'    => 0,
         'LWP::Simple'  => 0,
         'Data::Dumper' => 0,
+        'LWP::UserAgent' => 0,
+        'LWP::Authen::OAuth' => 0,
     },
 );
