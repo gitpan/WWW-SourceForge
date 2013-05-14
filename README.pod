@@ -55,7 +55,7 @@ the API (PHP and Python would be a winner).
 
     Rich Bowen
     CPAN ID: RBOW
-    SourceForge Community Geek Hacker
+    SourceForge Community Manager
     rbowen@apache.org
 
 =head1 SOURCE

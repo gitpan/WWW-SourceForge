@@ -2,7 +2,7 @@
 
 # t/002_load_user.t - check user module loading
 
-use Test::More tests => 6;
+use Test::More tests => 4;
 
 BEGIN { use_ok( 'WWW::SourceForge::User' ); }
 
