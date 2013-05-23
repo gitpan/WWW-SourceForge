@@ -1,7 +1,7 @@
 {
    "abstract" : "Interface to SourceForge's APIs - http://sourceforge.net/p/forge/documentation/API/",
    "author" : [
-      "Rich Bowen (rbowen@sourceforge.net)"
+      "Rich Bowen (rbowen@rcbowen.com)"
    ],
    "dynamic_config" : 1,
    "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.112621",
@@ -45,5 +45,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.67"
+   "version" : "0.68"
 }

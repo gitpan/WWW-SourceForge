@@ -1,7 +1,7 @@
 ---
 abstract: "Interface to SourceForge's APIs - http://sourceforge.net/p/forge/documentation/API/"
 author:
-  - 'Rich Bowen (rbowen@sourceforge.net)'
+  - 'Rich Bowen (rbowen@rcbowen.com)'
 build_requires:
   ExtUtils::MakeMaker: 0
 configure_requires:
@@ -27,4 +27,4 @@ requires:
   Test::More: 0
   Test::Simple: 0.44
   XML::Feed: 0
-version: 0.67
+version: 0.68

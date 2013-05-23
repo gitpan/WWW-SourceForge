@@ -6,7 +6,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME         => 'WWW::SourceForge',
     VERSION_FROM => 'lib/WWW/SourceForge.pm',                # finds \$VERSION
-    AUTHOR       => 'Rich Bowen (rbowen@sourceforge.net)',
+    AUTHOR       => 'Rich Bowen (rbowen@rcbowen.com)',
     ABSTRACT =>
 'Interface to SourceForge\'s APIs - http://sourceforge.net/p/forge/documentation/API/',
     PREREQ_PM => {
