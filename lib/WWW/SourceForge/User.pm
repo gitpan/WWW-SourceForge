@@ -3,7 +3,7 @@ use strict;
 use WWW::SourceForge;
 use WWW::SourceForge::Project;
 
-our $VERSION = '0.14';
+our $VERSION = '0.13';
 
 =head2 new
 
