@@ -5,7 +5,7 @@ use WWW::SourceForge::User;
 use LWP::Simple;
 use Data::Dumper;
 
-our $VERSION = '0.35';
+our $VERSION = '0.40';
 our $DEFAULT_ICON = 'http://a.fsdn.com/con/img/project_default.png';
 
 =head2 new

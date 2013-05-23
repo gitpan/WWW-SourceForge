@@ -5,7 +5,7 @@ use JSON::Parse;
 use XML::Feed;
 use File::HomeDir;
 
-our $VERSION = '0.68'; # This is the overall version for the entire
+our $VERSION = '0.70'; # This is the overall version for the entire
 # package, so should probably be updated even when the other modules are
 # touched.
 
